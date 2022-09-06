@@ -64,7 +64,7 @@ public class TraderController {
 	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 		try {
 			
-			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime()), null))
+			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime()), null));
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
 
 		} catch(Excepiotn e) {
