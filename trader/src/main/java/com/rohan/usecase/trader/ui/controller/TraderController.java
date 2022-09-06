@@ -80,7 +80,7 @@ public class TraderController {
 	public ResponseEntity<Trader> updateName(@RequestBody Map<String, String> payload) {
 
 		try {
-			Trader trader = repository.findbyEmail(payload.get("email"));
+			Trader trader = repository.findByEmail(payload.get("email"));
 
 			if (trader == null) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -98,14 +98,14 @@ public class TraderController {
 	public ResponseEntity<Trader> updateBalance(@RequestBody Map<String, String> payload) {
 
 		try {
-			Trader trader = repository.findbyEmail(payload.get("email"));
+			Trader trader = repository.findByEmail(payload.get("email"));
 
 			if (trader == null) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 
 			Long curr_balance = trader.getBalance();
-			trader.setBalance(curr_balance + Double.parseDouble(payload.get("balance")));
+			trader.setBalance(curr_balance + Long.parseLong(payload.get("balance")));
 
 			return new ResponseEntity<>(trader, HttpStatus.OK);
 		} catch(Exception e) {
