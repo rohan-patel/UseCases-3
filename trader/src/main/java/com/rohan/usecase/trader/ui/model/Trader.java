@@ -22,11 +22,13 @@ public class Trader {
 	public Trader() {
 	}
 
-	public Trader(String name, String email, Long balance) {
+	public Trader(String name, String email, Long balance, Timestamp createdAt, Timestamp updatedAt) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.balance = balance;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 	}
 
 	public Long getId() {
