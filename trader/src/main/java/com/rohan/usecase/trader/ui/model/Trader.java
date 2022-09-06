@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 public class Trader {
 
@@ -16,7 +19,12 @@ public class Trader {
 	private String name;
 	private String email;
 	private Long balance;
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp createdAt;
+	
+//	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp updatedAt;
 
 	public Trader() {
@@ -29,6 +37,14 @@ public class Trader {
 		this.balance = balance;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+	}
+
+	public Trader(String name, String email, Long balance, Timestamp createdAt) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.balance = balance;
+		this.createdAt = createdAt;
 	}
 
 	public Long getId() {

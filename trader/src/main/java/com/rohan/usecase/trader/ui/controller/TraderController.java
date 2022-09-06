@@ -48,7 +48,7 @@ public class TraderController {
 
 	}
 	
-	@GetMapping("/trading/traders/")
+	@GetMapping("/trading/traders")
 	public ResponseEntity<Trader> one(@RequestParam String email) {
 
 		try {
@@ -68,7 +68,7 @@ public class TraderController {
 	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 		try {
 			
-			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime()), null));
+			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime())));
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
 
 		} catch(Exception e) {
@@ -80,6 +80,10 @@ public class TraderController {
 	public ResponseEntity<Trader> updateName(@RequestBody Map<String, String> payload) {
 
 		try {
+			
+//			String email = payload.get("email");
+//			String newName = payload.get("name");
+			
 			Trader trader = repository.findByEmail(payload.get("email"));
 
 			if (trader == null) {
@@ -87,6 +91,7 @@ public class TraderController {
 			}
 
 			trader.setName(payload.get("name"));
+			repository.save(trader);
 
 			return new ResponseEntity<>(trader, HttpStatus.OK);
 		} catch(Exception e) {
@@ -105,8 +110,10 @@ public class TraderController {
 			}
 
 			Long curr_balance = trader.getBalance();
-			trader.setBalance(curr_balance + Long.parseLong(payload.get("balance")));
+			trader.setBalance(curr_balance + Long.parseLong(payload.get("amount")));
 
+			repository.save(trader);
+			
 			return new ResponseEntity<>(trader, HttpStatus.OK);
 		} catch(Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -114,8 +121,4 @@ public class TraderController {
 	}
 
 
-	
-	
-	
-	
 }
