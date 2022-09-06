@@ -6,6 +6,6 @@ import com.rohan.usecase.trader.ui.model.Trader;
 
 public interface TraderRepository extends JpaRepository<Trader, Long> {
 
-    Person findbyEmail(String email);
+    Trader findByEmail(String email);
 
 }

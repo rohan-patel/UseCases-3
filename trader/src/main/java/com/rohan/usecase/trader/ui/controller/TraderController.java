@@ -3,6 +3,9 @@ package com.rohan.usecase.trader.ui.controller;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Date;
+
+import java.sql.Timestamp;
 
 import org.springframework.http.HttpStatus;
 
@@ -68,7 +71,7 @@ public class TraderController {
 			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime()), null));
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
 
-		} catch(Excepiotn e) {
+		} catch(Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -102,7 +105,7 @@ public class TraderController {
 			}
 
 			Long curr_balance = trader.getBalance();
-			trader.setBalance(curr_balance + payload.get("balance"));
+			trader.setBalance(curr_balance + Double.parseDouble(payload.get("balance")));
 
 			return new ResponseEntity<>(trader, HttpStatus.OK);
 		} catch(Exception e) {
