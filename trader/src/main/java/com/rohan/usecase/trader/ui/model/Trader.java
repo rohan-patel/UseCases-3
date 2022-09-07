@@ -24,7 +24,6 @@ public class Trader {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp createdAt;
 	
-	@JsonSetter(nulls=Nulls.AS_EMPTY)
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp updatedAt;
 
