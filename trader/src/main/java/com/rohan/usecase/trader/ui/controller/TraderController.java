@@ -68,7 +68,7 @@ public class TraderController {
 	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 		try {
 
-			if (repository.findByEmail(trader.getEmail) == null) {
+			if (repository.findByEmail(trader.getEmail()) == null) {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 			
