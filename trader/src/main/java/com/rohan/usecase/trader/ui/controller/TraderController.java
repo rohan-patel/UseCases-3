@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -69,7 +68,7 @@ public class TraderController {
 		try {
 
 			if (repository.findByEmail(trader.getEmail()) != null) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 			
 			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime())));
@@ -84,9 +83,6 @@ public class TraderController {
 	public ResponseEntity<Trader> updateName(@RequestBody Map<String, String> payload) {
 
 		try {
-			
-//			String email = payload.get("email");
-//			String newName = payload.get("name");
 			
 			Trader trader = repository.findByEmail(payload.get("email"));
 
