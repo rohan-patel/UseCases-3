@@ -67,6 +67,10 @@ public class TraderController {
 	@PostMapping("/trading/traders/register")
 	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 		try {
+
+			if (repository.findByEmail(trader.getEmail) == null) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
 			
 			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime())));
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
@@ -91,6 +95,7 @@ public class TraderController {
 			}
 
 			trader.setName(payload.get("name"));
+			trader.setUpdatedAt(new Timestamp(new Date().getTime()));
 			repository.save(trader);
 
 			return new ResponseEntity<>(trader, HttpStatus.OK);
@@ -111,7 +116,7 @@ public class TraderController {
 
 			Long curr_balance = trader.getBalance();
 			trader.setBalance(curr_balance + Long.parseLong(payload.get("amount")));
-
+			trader.setUpdatedAt(new Timestamp(new Date().getTime()));
 			repository.save(trader);
 			
 			return new ResponseEntity<>(trader, HttpStatus.OK);

@@ -23,7 +23,7 @@ public class Trader {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp createdAt;
 	
-//	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonStter(nulls=Nulls.AS_EMPTY)
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
 	private Timestamp updatedAt;
 
