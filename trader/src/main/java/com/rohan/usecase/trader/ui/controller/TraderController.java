@@ -68,9 +68,9 @@ public class TraderController {
 	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 		try {
 
-			// if (repository.findByEmail(trader.getEmail()) == null) {
-			// 	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			// }
+			if (repository.findByEmail(trader.getEmail()) != null) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
 			
 			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(), new Timestamp(new Date().getTime())));
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
