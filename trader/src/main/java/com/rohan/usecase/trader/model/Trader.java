@@ -1,4 +1,4 @@
-package com.rohan.usecase.trader.ui.model;
+package com.rohan.usecase.trader.model;
 
 import java.sql.Timestamp;
 
