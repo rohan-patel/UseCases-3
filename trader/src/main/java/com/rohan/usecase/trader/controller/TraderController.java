@@ -49,16 +49,33 @@ public class TraderController {
 
 	}
 
+	// @GetMapping
+	// public ResponseEntity one(@RequestParam String email) {
+
+	// 	try {
+	// 		Trader trader = repository.findByEmail(email);
+
+	// 		if (trader == null) {
+	// 			return ResponseEntity
+	// 					.status(HttpStatus.NOT_FOUND)
+	// 					.body("Trader with given Email Not Found");
+	// 		}
+	// 		return new ResponseEntity<>(trader, HttpStatus.OK);
+	// 	} catch (Exception e) {
+	// 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+
+	// }
+	
 	@GetMapping
-	public ResponseEntity one(@RequestParam String email) {
+	public ResponseEntity<Trader> findOne(@RequestParam String email) {
 
 		try {
 			Trader trader = repository.findByEmail(email);
 
 			if (trader == null) {
-				return ResponseEntity
-						.status(HttpStatus.NOT_FOUND)
-						.body("Trader with given Email Not Found");
+				throw new EntityNotFoundException("Trader with email" + email + "not found in the database");
+						
 			}
 			return new ResponseEntity<>(trader, HttpStatus.OK);
 		} catch (Exception e) {
