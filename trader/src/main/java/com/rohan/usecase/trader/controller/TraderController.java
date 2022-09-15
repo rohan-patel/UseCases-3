@@ -42,13 +42,7 @@ public class TraderController {
 
 			repository.findAll().forEach(traderList::add);
 
-			if (traderList.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
 			return new ResponseEntity<>(traderList, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 
 	}
 
@@ -113,18 +107,37 @@ public class TraderController {
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
 
 	}
+	
+	// @PutMapping
+	// public ResponseEntity updateName(@RequestBody Map<String, String> payload) {
 
-	@PutMapping
-	public ResponseEntity updateName(@RequestBody Map<String, String> payload) {
+	// 	try {
 
-		try {
+	// 		Trader trader = repository.findByEmail(payload.get("email"));
 
-			Trader trader = repository.findByEmail(payload.get("email"));
+	// 		if (trader == null) {
+	// 			return ResponseEntity
+	// 					.status(HttpStatus.NOT_FOUND)
+	// 					.body("Trader with given Email Not Found");
+	// 		}
+
+	// 		trader.setName(payload.get("name"));
+	// 		trader.setUpdatedAt(new Timestamp(new Date().getTime()));
+	// 		repository.save(trader);
+
+	// 		return new ResponseEntity<>(trader, HttpStatus.OK);
+	// 	} catch (Exception e) {
+	// 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+	// }
+
+	@PostMapping
+	public ResponseEntity<Trader> updateName(@RequestBody Map<String, String> payload) {
+
+		Trader trader = repository.findByEmail(payload.get("email"));
 
 			if (trader == null) {
-				return ResponseEntity
-						.status(HttpStatus.NOT_FOUND)
-						.body("Trader with given Email Not Found");
+				throw new EntityNotFoundException("Trader with email " + email + " not found in the database");
 			}
 
 			trader.setName(payload.get("name"));
@@ -132,21 +145,39 @@ public class TraderController {
 			repository.save(trader);
 
 			return new ResponseEntity<>(trader, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+
 	}
 
-	@PutMapping("/add")
-	public ResponseEntity updateBalance(@RequestBody Map<String, String> payload) {
+	// @PutMapping("/add")
+	// public ResponseEntity updateBalance(@RequestBody Map<String, String> payload) {
 
-		try {
-			Trader trader = repository.findByEmail(payload.get("email"));
+	// 	try {
+	// 		Trader trader = repository.findByEmail(payload.get("email"));
+
+	// 		if (trader == null) {
+	// 			return ResponseEntity
+	// 					.status(HttpStatus.NOT_FOUND)
+	// 					.body("Trader with given Email Not Found");
+	// 		}
+
+	// 		Long curr_balance = trader.getBalance();
+	// 		trader.setBalance(curr_balance + Long.parseLong(payload.get("amount")));
+	// 		trader.setUpdatedAt(new Timestamp(new Date().getTime()));
+	// 		repository.save(trader);
+
+	// 		return new ResponseEntity<>(trader, HttpStatus.OK);
+	// 	} catch (Exception e) {
+	// 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+	// }
+	
+	@PostMapping("/add")
+	public ResponseEntity<Trader> updateBalance(@RequestBody Map<String, String> payload) {
+
+		Trader trader = repository.findByEmail(payload.get("email"));
 
 			if (trader == null) {
-				return ResponseEntity
-						.status(HttpStatus.NOT_FOUND)
-						.body("Trader with given Email Not Found");
+				throw new EntityNotFoundException("Trader with email " + email + " not found in the database");
 			}
 
 			Long curr_balance = trader.getBalance();
@@ -155,9 +186,7 @@ public class TraderController {
 			repository.save(trader);
 
 			return new ResponseEntity<>(trader, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+
 	}
 
 	@DeleteMapping("/delete")
@@ -174,6 +203,22 @@ public class TraderController {
 					.status(HttpStatus.NOT_FOUND)
 					.body("Cold not find a Trader with the given Email ID");
 		}
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity deleteTrader(@RequestParam String email) {
+		
+		Trader trader = repository.findByEmail(email);
+
+		if (trader == null) {
+			throw new EntityNotFoundException("Trader with email " + email + " not found in the database");
+		}
+		repository.delete(trader);
+
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body("Trader deleted successfully");
+		
 	}
 
 }
