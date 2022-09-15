@@ -105,7 +105,7 @@ public class TraderController {
 	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 
 			if (repository.findByEmail(trader.getEmail()) != null) {
-				throw new UserAlreadyExistException("Trader with email " + email + " already exists in the database");
+				throw new UserAlreadyExistException("Trader with email " + trader.getEmail() + " already exists in the database");
 			}
 
 			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(),
