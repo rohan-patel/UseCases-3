@@ -25,6 +25,7 @@ import javax.persistence.EntityNotFoundException;
 
 import com.rohan.usecase.trader.model.Trader;
 import com.rohan.usecase.trader.repository.TraderRepository;
+import com.rohan.usecase.trader.exception.UserAlreadyExistException;
 
 @RestController
 @RequestMapping("/trading/traders")
@@ -81,23 +82,36 @@ public class TraderController {
 
 	}
 
+	// @PostMapping("/register")
+	// public ResponseEntity createTrader(@RequestBody Trader trader) {
+	// 	try {
+
+	// 		if (repository.findByEmail(trader.getEmail()) != null) {
+	// 			return ResponseEntity
+	// 					.status(HttpStatus.BAD_REQUEST)
+	// 					.body("Trader with given Email already exists");
+	// 		}
+
+	// 		Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(),
+	// 				new Timestamp(new Date().getTime())));
+	// 		return new ResponseEntity<>(_trader, HttpStatus.CREATED);
+
+	// 	} catch (Exception e) {
+	// 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	// 	}
+	// }
+	
 	@PostMapping("/register")
-	public ResponseEntity createTrader(@RequestBody Trader trader) {
-		try {
+	public ResponseEntity<Trader> createTrader(@RequestBody Trader trader) {
 
 			if (repository.findByEmail(trader.getEmail()) != null) {
-				return ResponseEntity
-						.status(HttpStatus.BAD_REQUEST)
-						.body("Trader with given Email already exists");
+				throw new UserAlreadyExistException("Trader with email " + email + " already exists in the database");
 			}
 
 			Trader _trader = repository.save(new Trader(trader.getName(), trader.getEmail(), trader.getBalance(),
 					new Timestamp(new Date().getTime())));
 			return new ResponseEntity<>(_trader, HttpStatus.CREATED);
 
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 	}
 
 	@PutMapping
