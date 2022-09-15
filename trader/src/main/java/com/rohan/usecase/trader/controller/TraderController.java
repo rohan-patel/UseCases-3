@@ -189,21 +189,21 @@ public class TraderController {
 
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity deleteTrader(@RequestParam String email) {
+	// @DeleteMapping("/delete")
+	// public ResponseEntity deleteTrader(@RequestParam String email) {
 
-		try {
-			Trader trader = repository.findByEmail(email);
-			repository.delete(trader);
-			return ResponseEntity
-					.status(HttpStatus.OK)
-					.body("Trader deleted successfully");
-		} catch (Exception e) {
-			return ResponseEntity
-					.status(HttpStatus.NOT_FOUND)
-					.body("Cold not find a Trader with the given Email ID");
-		}
-	}
+	// 	try {
+	// 		Trader trader = repository.findByEmail(email);
+	// 		repository.delete(trader);
+	// 		return ResponseEntity
+	// 				.status(HttpStatus.OK)
+	// 				.body("Trader deleted successfully");
+	// 	} catch (Exception e) {
+	// 		return ResponseEntity
+	// 				.status(HttpStatus.NOT_FOUND)
+	// 				.body("Cold not find a Trader with the given Email ID");
+	// 	}
+	// }
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity deleteTrader(@RequestParam String email) {
