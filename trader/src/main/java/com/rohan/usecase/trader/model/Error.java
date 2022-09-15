@@ -1,8 +1,12 @@
 package com.rohan.usecase.trader.model;
 
+import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
+
 public class Error {
     private HttpStatus httpStatus;
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
     private String message;
     private String details;
 

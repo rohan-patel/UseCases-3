@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.rohan.usecase.trader.model.Trader;
 import com.rohan.usecase.trader.repository.TraderRepository;
 
@@ -69,18 +71,13 @@ public class TraderController {
 	
 	@GetMapping
 	public ResponseEntity<Trader> findOne(@RequestParam String email) {
-
-		try {
+		
 			Trader trader = repository.findByEmail(email);
 
 			if (trader == null) {
-				throw new EntityNotFoundException("Trader with email" + email + "not found in the database");
-						
+				throw new EntityNotFoundException("Trader with email " + email + " not found in the database");
 			}
 			return new ResponseEntity<>(trader, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 
 	}
 

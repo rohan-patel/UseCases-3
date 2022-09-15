@@ -1,5 +1,18 @@
 package com.rohan.usecase.trader.exception;
 
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+
+import javax.persistence.EntityNotFoundException;
+
+import com.rohan.usecase.trader.model.Error;
+
+@RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class) 
