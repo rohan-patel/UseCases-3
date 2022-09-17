@@ -1,14 +1,11 @@
 package com.rohan.usecase.trader.model;
 
-<<<<<<< HEAD
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
-=======
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
->>>>>>> branch 'main' of https://github.com/rohan-patel/UseCases-3.git
 
 public class Error {
     private HttpStatus httpStatus;

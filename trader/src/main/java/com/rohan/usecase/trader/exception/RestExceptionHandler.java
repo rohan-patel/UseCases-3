@@ -1,6 +1,5 @@
 package com.rohan.usecase.trader.exception;
 
-<<<<<<< HEAD
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.http.HttpStatus;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.rohan.usecase.trader.model.Error;
-=======
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -23,7 +21,6 @@ import javax.persistence.EntityNotFoundException;
 
 import com.rohan.usecase.trader.model.Error;
 import com.rohan.usecase.trader.exception.UserAlreadyExistException;
->>>>>>> branch 'main' of https://github.com/rohan-patel/UseCases-3.git
 
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
