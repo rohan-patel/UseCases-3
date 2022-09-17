@@ -3,6 +3,9 @@ package com.rohan.usecase.trader.controller;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+
+import javax.persistence.EntityNotFoundException;
+
 import java.util.Date;
 
 import java.sql.Timestamp;
@@ -69,19 +72,14 @@ public class TraderController {
 	
 	@GetMapping
 	public ResponseEntity<Trader> findOne(@RequestParam String email) {
-
-		try {
-			Trader trader = repository.findByEmail(email);
-
-			if (trader == null) {
-				throw new EntityNotFoundException("Trader with email" + email + "not found in the database");
-						
-			}
-			return new ResponseEntity<>(trader, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		
+		Trader trader = repository.findByEmail(email);
+		
+		if (trader == null) {
+			throw new EntityNotFoundException("Trader with email " + email + " not found in the database");
 		}
-
+		return new ResponseEntity<>(trader, HttpStatus.OK);
+		
 	}
 
 	@PostMapping("/register")
